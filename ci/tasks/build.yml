@@ -1,0 +1,15 @@
+---
+platform: linux
+image_resource: 
+    type: docker-image
+    source: 
+        repository: 212136148154.dkr.ecr.ap-southeast-2.amazonaws.com/ci/gen3-cam-android-builder
+        tag: latest
+inputs:
+    - name: aws-iot-device-sdk-java-v2
+    - name: aws-crt-java
+params:
+    NEXUS_USER:
+    NEXUS_PASSWORD:
+run:
+    path: aws-iot-device-sdk-java-v2/ci/scripts/build.sh

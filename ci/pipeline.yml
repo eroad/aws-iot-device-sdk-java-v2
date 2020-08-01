@@ -1,0 +1,37 @@
+---
+defines:
+  - github-credentials: &GITHUB_CREDENTIALS
+      password: ((github-password))
+      username: ((github-username))
+  - ignore_paths: &IGNORE_PATHS
+    - ci/pipeline.yml # Tracked by eroad/pipeline
+
+resources:
+  - name: aws-iot-device-sdk-java-v2
+    type: git
+    source:
+      <<: *GITHUB_CREDENTIALS
+      uri: https://github.com/eroad/aws-iot-device-sdk-java-v2.git
+      branch: eroad-ci
+      ignore_paths: *IGNORE_PATHS
+  - name: aws-crt-java
+    type: git
+    source:
+      <<: *GITHUB_CREDENTIALS
+      uri: https://github.com/eroad/aws-crt-java.git
+      branch: eroad-ci
+      ignore_paths: *IGNORE_PATHS
+
+jobs:
+  - name: build
+    serial: true
+    plan:
+      - get: aws-iot-device-sdk-java-v2
+        trigger: true
+      - get: aws-crt-java
+        trigger: true
+      - task: build
+        file: aws-iot-device-sdk-java-v2/ci/tasks/build.yml
+        params:
+          NEXUS_USER: ((nexus-user))
+          NEXUS_PASSWORD: ((nexus-password))
