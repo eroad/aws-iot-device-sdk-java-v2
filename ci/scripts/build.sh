@@ -6,6 +6,6 @@
 cd aws-crt-java/android
 ./gradlew publishToMavenLocal
 ./gradlew publishReleasePublicationToMavenRepository || true
-cd ../aws-iot-device-sdk-java-v2/android
+cd ../../aws-iot-device-sdk-java-v2/android
 ./gradlew publishToMavenLocal
 ./gradlew publishReleasePublicationToMavenRepository || true
